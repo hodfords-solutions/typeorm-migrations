@@ -1,0 +1,81 @@
+{
+  "name": "typeorm-migrations",
+  "version": "11.0.0",
+  "description": "TypeORM migrations",
+  "readmeFilename": "README.md",
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hodfords-solutions/typeorm-migrations"
+  },
+  "tags": [
+    "orm",
+    "typescript",
+    "typescript-orm",
+    "typeorm-sample",
+    "typeorm-example"
+  ],
+  "peerDependencies": {
+    "typeorm": "*",
+    "@nestjs/common": "*",
+    "@nestjs/core": "*",
+    "@nestjs/typeorm": "*",
+    "@types/jest": "*",
+    "@types/node": "*",
+    "pg": "*",
+    "lodash": "*"
+  },
+  "devDependencies": {
+    "@hodfords/nestjs-eslint-config": "^11.0.1",
+    "@hodfords/nestjs-prettier-config": "^11.0.1",
+    "@types/jest": "29.5.14",
+    "@types/node": "22.13.10",
+    "cspell": "8.17.5",
+    "eslint": "9.22.0",
+    "husky": "9.1.7",
+    "is-ci": "4.1.0",
+    "jest": "29.7.0",
+    "lint-staged": "15.5.0",
+    "prettier": "3.5.3",
+    "rimraf": "^6.0.1",
+    "ts-jest": "29.2.6",
+    "ts-node": "10.9.2",
+    "typeorm": "^0.3.21",
+    "typescript": "5.8.2"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "postbuild": "cp package.json dist/lib && cp README.md dist/lib && cp .npmrc dist/lib",
+    "deploy": "npm run build && npm publish dist",
+    "typeorm": "./node_modules/.bin/typeorm ",
+    "format": "prettier --write \"**/*.ts\"",
+    "check": "prettier --check \"**/*.ts\"",
+    "test": "jest --passWithNoTests  --testTimeout=450000 --runInBand",
+    "cspell": "cspell",
+    "prepare": "is-ci || husky",
+    "lint": "eslint \"lib/**/*.ts\" \"sample/**/*.ts\" --fix --max-warnings 0",
+    "lint-staged": "lint-staged"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@hodfords/typeorm-helper(|/.*)$": "<rootDir>/lib/$1"
+    }
+  }
+}
