@@ -43,6 +43,11 @@ export class BaseColumn {
         return this;
     }
 
+    public comment(comment: string): this {
+        this.tableColumn.comment = comment;
+        return this;
+    }
+
     public foreign(table: string, column: string = 'id', onDelete = 'CASCADE', onUpdate = 'CASCADE'): void {
         this.foreignKeys.push(
             new TableForeignKey({

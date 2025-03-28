@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { TableColumn, TableForeignKey } from 'typeorm';
 import { TableColumnOptions } from 'typeorm/schema-builder/options/TableColumnOptions';
 import { BaseColumn } from './base.column';
@@ -325,14 +326,206 @@ export class BaseTable {
         return column;
     }
 
-    public primaryIncrement(name: string = 'id', options: Partial<TableColumnOptions> = {}): BaseColumn {
+    public id(name: string = 'id', options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
-                type: 'int',
+                type: 'integer',
                 isPrimary: true,
                 isGenerated: true,
                 generationStrategy: 'increment'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public char(name: string, length: number, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'char',
+                length: length.toString()
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public increments(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'integer',
+                isPrimary: true,
+                isGenerated: true,
+                generationStrategy: 'increment'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public smallIncrements(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'smallint',
+                isPrimary: true,
+                isGenerated: true,
+                generationStrategy: 'increment'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public bigIncrements(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'bigint',
+                isPrimary: true,
+                isGenerated: true,
+                generationStrategy: 'increment'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public real(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'real'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public doublePrecision(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'double precision'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public float(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.doublePrecision(name, options);
+    }
+
+    public float4(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.real(name, options);
+    }
+
+    public float8(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.doublePrecision(name, options);
+    }
+
+    public time(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'time'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public timetz(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'timetz'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public timestamptz(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'timestamptz'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public geography(
+        name: string,
+        spatialFeatureType: string,
+        srid = 4326,
+        options?: Partial<TableColumnOptions>
+    ): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'geography',
+                spatialFeatureType,
+                srid
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public geometry(
+        name: string,
+        spatialFeatureType: string,
+        srid = 0,
+        options?: Partial<TableColumnOptions>
+    ): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'geometry',
+                spatialFeatureType,
+                srid
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public macaddr(name: string, options?: Partial<TableColumnOptions>): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'macaddr'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
+    public inet(name: string, options?: Partial<TableColumnOptions>): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'inet'
             },
             options
         );
