@@ -13,7 +13,11 @@
         "ILIKE",
         "nextval",
         "oids",
-        "postbuild"
+        "postbuild",
+        "timetz",
+        "timestamptz",
+        "srid",
+        "macaddr"
     ],
     "flagWords": ["hte"],
     "ignorePaths": ["node_modules", "test", "*.spec.ts", "cspell.json"]
