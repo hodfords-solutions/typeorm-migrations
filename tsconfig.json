@@ -14,7 +14,7 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@hodfords/typeorm-helper": ["lib"]
+      "@hodfords/typeorm-migrations": ["lib"]
     }
   },
   "include": [
