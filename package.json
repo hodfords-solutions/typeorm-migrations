@@ -1,6 +1,6 @@
 {
-  "name": "typeorm-migrations",
-  "version": "11.0.0",
+  "name": "@hodfords/typeorm-migrations",
+  "version": "1.0.0",
   "description": "TypeORM migrations",
   "readmeFilename": "README.md",
   "author": "",
@@ -18,13 +18,8 @@
   ],
   "peerDependencies": {
     "typeorm": "*",
-    "@nestjs/common": "*",
-    "@nestjs/core": "*",
-    "@nestjs/typeorm": "*",
     "@types/jest": "*",
-    "@types/node": "*",
-    "pg": "*",
-    "lodash": "*"
+    "@types/node": "*"
   },
   "devDependencies": {
     "@hodfords/nestjs-eslint-config": "^11.0.1",
@@ -42,7 +37,8 @@
     "ts-jest": "29.2.6",
     "ts-node": "10.9.2",
     "typeorm": "^0.3.21",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "pg": "8.11.3"
   },
   "scripts": {
     "prebuild": "rimraf dist",
