@@ -71,7 +71,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@hodfords/typeorm-helper(|/.*)$": "<rootDir>/lib/$1"
+      "^@hodfords/typeorm-migrations(|/.*)$": "<rootDir>/lib/$1"
     }
   }
 }
