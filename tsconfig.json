@@ -19,8 +19,6 @@
   },
   "include": [
     "lib",
-    "sample",
-    "tests"
   ],
   "exclude": [
     "dist",

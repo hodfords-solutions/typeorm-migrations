@@ -43,7 +43,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "postbuild": "cp package.json dist/lib && cp README.md dist/lib && cp .npmrc dist/lib",
+    "postbuild": "cp package.json dist && cp README.md dist && cp .npmrc dist",
     "deploy": "npm run build && npm publish dist",
     "typeorm": "./node_modules/.bin/typeorm ",
     "format": "prettier --write \"**/*.ts\"",
