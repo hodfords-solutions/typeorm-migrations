@@ -51,7 +51,7 @@
     "test": "jest --passWithNoTests  --testTimeout=450000 --runInBand",
     "cspell": "cspell",
     "prepare": "is-ci || husky",
-    "lint": "eslint \"lib/**/*.ts\" \"sample/**/*.ts\" --fix --max-warnings 0",
+    "lint": "eslint \"lib/**/*.ts\" --fix --max-warnings 0",
     "lint-staged": "lint-staged"
   },
   "jest": {
