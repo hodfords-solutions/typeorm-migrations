@@ -128,6 +128,22 @@ export class BaseTable {
         return column;
     }
 
+    /**
+    * Only for Postgres 18+
+    */
+    public primaryUuidV7(name: string = 'id', options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'uuid',
+                isPrimary: true,
+                default: 'uuidv7()'
+            }, options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
     public integer(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
         const column = this.getColumnValue(
             {
