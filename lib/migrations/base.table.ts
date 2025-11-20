@@ -63,6 +63,18 @@ export class BaseTable {
         return column;
     }
 
+    public tsvector(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue(
+            {
+                name: name,
+                type: 'tsvector'
+            },
+            options
+        );
+        this.columns.push(column);
+        return column;
+    }
+
     public text(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
         const column = this.getColumnValue(
             {
@@ -129,8 +141,8 @@ export class BaseTable {
     }
 
     /**
-    * Only for Postgres 18+
-    */
+     * Only for Postgres 18+
+     */
     public primaryUuidV7(name: string = 'id', options: Partial<TableColumnOptions> = null): BaseColumn {
         const column = this.getColumnValue(
             {
@@ -138,7 +150,8 @@ export class BaseTable {
                 type: 'uuid',
                 isPrimary: true,
                 default: 'uuidv7()'
-            }, options
+            },
+            options
         );
         this.columns.push(column);
         return column;
