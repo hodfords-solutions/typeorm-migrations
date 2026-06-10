@@ -1,4 +1,16 @@
-import { MigrationInterface, QueryRunner, Table, TableColumn, TableForeignKey, TableIndex, TableUnique } from 'typeorm';
+import {
+    MigrationInterface,
+    QueryRunner,
+    Table,
+    TableCheck,
+    TableColumn,
+    TableExclusion,
+    TableForeignKey,
+    TableIndex,
+    TableUnique,
+    View
+} from 'typeorm';
+import { TableIndexOptions } from 'typeorm/schema-builder/options/TableIndexOptions';
 import { BaseTable } from './base.table';
 
 export abstract class BaseMigration implements MigrationInterface {
@@ -21,7 +33,7 @@ export abstract class BaseMigration implements MigrationInterface {
         for (const column of table.columnToDeletes) {
             await this.queryRunner.dropColumn(tableName, column);
         }
-        if (table.getNewColumns()) {
+        if (table.getNewColumns().length) {
             await this.queryRunner.addColumns(tableName, table.getNewColumns());
         }
         await this.createIndex(tableName, table);
@@ -119,5 +131,129 @@ export abstract class BaseMigration implements MigrationInterface {
 
     async dropForeign(table: Table | string, foreignKeyOrName: TableForeignKey | string): Promise<void> {
         await this.queryRunner.dropForeignKey(table, foreignKeyOrName);
+    }
+
+    async query(query: string, parameters?: any[]): Promise<any> {
+        return this.queryRunner.query(query, parameters);
+    }
+
+    async getTable(tableName: string): Promise<Table | undefined> {
+        return this.queryRunner.getTable(tableName);
+    }
+
+    async clearTable(tableName: string): Promise<void> {
+        await this.queryRunner.clearTable(tableName);
+    }
+
+    async changeTableComment(table: Table | string, comment?: string): Promise<void> {
+        await this.queryRunner.changeTableComment(table, comment);
+    }
+
+    async addColumn(table: Table | string, column: TableColumn): Promise<void> {
+        await this.queryRunner.addColumn(table, column);
+    }
+
+    async addColumns(table: Table | string, columns: TableColumn[]): Promise<void> {
+        await this.queryRunner.addColumns(table, columns);
+    }
+
+    async changeColumns(
+        table: Table | string,
+        changedColumns: { oldColumn: TableColumn; newColumn: TableColumn }[]
+    ): Promise<void> {
+        await this.queryRunner.changeColumns(table, changedColumns);
+    }
+
+    async createPrimaryKey(table: Table | string, columnNames: string[], constraintName?: string): Promise<void> {
+        await this.queryRunner.createPrimaryKey(table, columnNames, constraintName);
+    }
+
+    async updatePrimaryKeys(table: Table | string, columns: TableColumn[]): Promise<void> {
+        await this.queryRunner.updatePrimaryKeys(table, columns);
+    }
+
+    async dropPrimaryKey(table: Table | string, constraintName?: string): Promise<void> {
+        await this.queryRunner.dropPrimaryKey(table, constraintName);
+    }
+
+    async addIndex(tableName: string, columnNames: string[], options?: Partial<TableIndexOptions>): Promise<void> {
+        const index = new TableIndex({
+            name: `${tableName}-${columnNames.join('-')}Index`,
+            columnNames,
+            ...options
+        });
+        await this.queryRunner.createIndex(tableName, index);
+    }
+
+    async dropIndices(table: Table | string, indices: TableIndex[]): Promise<void> {
+        await this.queryRunner.dropIndices(table, indices);
+    }
+
+    async addForeign(
+        tableName: string,
+        columnName: string,
+        referencedTable: string,
+        referencedColumn: string = 'id',
+        onDelete = 'CASCADE',
+        onUpdate = 'CASCADE'
+    ): Promise<void> {
+        await this.queryRunner.createForeignKey(
+            tableName,
+            new TableForeignKey({
+                columnNames: [columnName],
+                referencedTableName: referencedTable,
+                referencedColumnNames: [referencedColumn],
+                onDelete,
+                onUpdate
+            })
+        );
+    }
+
+    async createCheck(table: Table | string, expression: string, name?: string): Promise<void> {
+        await this.queryRunner.createCheckConstraint(table, new TableCheck({ name, expression }));
+    }
+
+    async dropCheck(table: Table | string, checkOrName: TableCheck | string): Promise<void> {
+        await this.queryRunner.dropCheckConstraint(table, checkOrName);
+    }
+
+    async createExclusion(table: Table | string, expression: string, name?: string): Promise<void> {
+        await this.queryRunner.createExclusionConstraint(table, new TableExclusion({ name, expression }));
+    }
+
+    async dropExclusion(table: Table | string, exclusionOrName: TableExclusion | string): Promise<void> {
+        await this.queryRunner.dropExclusionConstraint(table, exclusionOrName);
+    }
+
+    async createView(name: string, expression: string, materialized = false): Promise<void> {
+        await this.queryRunner.createView(new View({ name, expression, materialized }), false);
+    }
+
+    async dropView(view: View | string): Promise<void> {
+        await this.queryRunner.dropView(view);
+    }
+
+    async createSchema(schemaPath: string, ifNotExist = true): Promise<void> {
+        await this.queryRunner.createSchema(schemaPath, ifNotExist);
+    }
+
+    async dropSchema(schemaPath: string, ifExist = true, isCascade = false): Promise<void> {
+        await this.queryRunner.dropSchema(schemaPath, ifExist, isCascade);
+    }
+
+    async hasSchema(schema: string): Promise<boolean> {
+        return this.queryRunner.hasSchema(schema);
+    }
+
+    async createDatabase(database: string, ifNotExist = true): Promise<void> {
+        await this.queryRunner.createDatabase(database, ifNotExist);
+    }
+
+    async dropDatabase(database: string, ifExist = true): Promise<void> {
+        await this.queryRunner.dropDatabase(database, ifExist);
+    }
+
+    async hasDatabase(database: string): Promise<boolean> {
+        return this.queryRunner.hasDatabase(database);
     }
 }

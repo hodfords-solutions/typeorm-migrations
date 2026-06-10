@@ -38,6 +38,15 @@ export class BaseTable {
         return new BaseColumn(new TableColumn({ ...intOptions, ...options }));
     }
 
+    /**
+     * Add a column of any type supported by the database driver.
+     */
+    public column(name: string, type: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        const column = this.getColumnValue({ name, type }, options);
+        this.columns.push(column);
+        return column;
+    }
+
     public bytea(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
         const column = this.getColumnValue(
             {
@@ -560,5 +569,138 @@ export class BaseTable {
         );
         this.columns.push(column);
         return column;
+    }
+
+    public varchar(name: string, length: number = 255, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.string(name, length, options);
+    }
+
+    public numeric(
+        name: string,
+        precision: number = 10,
+        scale: number = 2,
+        options: Partial<TableColumnOptions> = null
+    ): BaseColumn {
+        return this.column(name, 'numeric', { precision, scale, ...options });
+    }
+
+    public money(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'money', options);
+    }
+
+    public citext(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'citext', options);
+    }
+
+    public hstore(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'hstore', options);
+    }
+
+    public bit(name: string, length: number = 1, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'bit', { length: length.toString(), ...options });
+    }
+
+    public varbit(name: string, length?: number, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'bit varying', { length: length?.toString(), ...options });
+    }
+
+    public interval(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'interval', options);
+    }
+
+    public point(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'point', options);
+    }
+
+    public line(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'line', options);
+    }
+
+    public lseg(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'lseg', options);
+    }
+
+    public box(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'box', options);
+    }
+
+    public path(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'path', options);
+    }
+
+    public polygon(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'polygon', options);
+    }
+
+    public circle(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'circle', options);
+    }
+
+    public cidr(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'cidr', options);
+    }
+
+    public macaddr8(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'macaddr8', options);
+    }
+
+    public tsquery(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'tsquery', options);
+    }
+
+    public xml(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'xml', options);
+    }
+
+    public int4range(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'int4range', options);
+    }
+
+    public int8range(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'int8range', options);
+    }
+
+    public numrange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'numrange', options);
+    }
+
+    public tsrange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'tsrange', options);
+    }
+
+    public tstzrange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'tstzrange', options);
+    }
+
+    public daterange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'daterange', options);
+    }
+
+    public cube(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'cube', options);
+    }
+
+    public ltree(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'ltree', options);
+    }
+
+    public smallints(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'smallint', { isArray: true, ...options });
+    }
+
+    public bigints(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'bigint', { isArray: true, ...options });
+    }
+
+    public booleans(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'boolean', { isArray: true, ...options });
+    }
+
+    public jsonbs(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'jsonb', { isArray: true, ...options });
+    }
+
+    public texts(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+        return this.column(name, 'text', { isArray: true, ...options });
     }
 }

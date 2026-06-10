@@ -1,6 +1,6 @@
 {
   "name": "@hodfords/typeorm-migrations",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "TypeORM migrations",
   "readmeFilename": "README.md",
   "author": "",
@@ -61,6 +61,9 @@
       "ts"
     ],
     "rootDir": ".",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
