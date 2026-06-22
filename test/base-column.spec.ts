@@ -116,19 +116,9 @@ describe('BaseColumn', () => {
         expect(column.tableColumn.srid).toEqual(4326);
     });
 
-    it('width() sets the display width', () => {
-        column.width(4);
-        expect(column.tableColumn.width).toEqual(4);
-    });
-
     it('unsigned() sets the unsigned attribute', () => {
         column.unsigned();
         expect(column.tableColumn.unsigned).toEqual(true);
-    });
-
-    it('zerofill() sets the zerofill attribute', () => {
-        column.zerofill();
-        expect(column.tableColumn.zerofill).toEqual(true);
     });
 
     it('onUpdate() sets the ON UPDATE trigger', () => {

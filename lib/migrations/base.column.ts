@@ -121,26 +121,10 @@ export class BaseColumn {
     }
 
     /**
-     * Column type's display width. Works only for MySQL.
-     */
-    public width(width: number): this {
-        this.tableColumn.width = width;
-        return this;
-    }
-
-    /**
      * UNSIGNED attribute. Works only for MySQL.
      */
     public unsigned(): this {
         this.tableColumn.unsigned = true;
-        return this;
-    }
-
-    /**
-     * ZEROFILL attribute. Works only for MySQL.
-     */
-    public zerofill(): this {
-        this.tableColumn.zerofill = true;
         return this;
     }
 
