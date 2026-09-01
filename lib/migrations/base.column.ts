@@ -1,9 +1,8 @@
 import { TableColumn, TableForeignKey } from 'typeorm';
-import { TableForeignKeyOptions } from 'typeorm/schema-builder/options/TableForeignKeyOptions';
 
 export class BaseColumn {
     public isIndex = false;
-    public foreignKeys: TableForeignKeyOptions[] = [];
+    public foreignKeys: TableForeignKey[] = [];
 
     public constructor(public tableColumn: TableColumn) {}
 

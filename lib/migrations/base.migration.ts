@@ -10,11 +10,11 @@ import {
     TableUnique,
     View
 } from 'typeorm';
-import { TableIndexOptions } from 'typeorm/schema-builder/options/TableIndexOptions';
-import { BaseTable } from './base.table';
+import { TableIndexOptions } from 'typeorm/schema-builder/options/TableIndexOptions.js';
+import { BaseTable } from './base.table.js';
 
 export abstract class BaseMigration implements MigrationInterface {
-    private queryRunner: QueryRunner = null;
+    private queryRunner: QueryRunner;
 
     async create(tableName: string, callback: (table: BaseTable) => void): Promise<void> {
         const table = new BaseTable();

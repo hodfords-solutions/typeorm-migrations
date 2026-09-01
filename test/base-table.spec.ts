@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseColumn, BaseTable } from '@hodfords/typeorm-migrations';
 import { TableColumn } from 'typeorm';
 
@@ -9,7 +10,7 @@ describe('BaseTable', () => {
     });
 
     const getColumn = (name: string): TableColumn => {
-        return table.getNewColumns().find((column) => column.name === name);
+        return table.getNewColumns().find((column) => column.name === name)!;
     };
 
     describe('simple column types', () => {

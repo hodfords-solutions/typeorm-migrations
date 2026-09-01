@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, vi, type Mocked } from 'vitest';
 import { BaseMigration, BaseTable } from '@hodfords/typeorm-migrations';
 import {
     QueryRunner,
@@ -15,52 +16,52 @@ class TestMigration extends BaseMigration {
     async run(): Promise<void> {}
 }
 
-const createMockQueryRunner = (): jest.Mocked<QueryRunner> => {
+const createMockQueryRunner = (): Mocked<QueryRunner> => {
     return {
-        query: jest.fn(),
-        createTable: jest.fn(),
-        dropTable: jest.fn(),
-        renameTable: jest.fn(),
-        hasTable: jest.fn(),
-        hasColumn: jest.fn(),
-        getTable: jest.fn(),
-        clearTable: jest.fn(),
-        changeTableComment: jest.fn(),
-        addColumn: jest.fn(),
-        addColumns: jest.fn(),
-        renameColumn: jest.fn(),
-        changeColumn: jest.fn(),
-        changeColumns: jest.fn(),
-        dropColumn: jest.fn(),
-        dropColumns: jest.fn(),
-        createPrimaryKey: jest.fn(),
-        updatePrimaryKeys: jest.fn(),
-        dropPrimaryKey: jest.fn(),
-        createUniqueConstraint: jest.fn(),
-        dropUniqueConstraint: jest.fn(),
-        createCheckConstraint: jest.fn(),
-        dropCheckConstraint: jest.fn(),
-        createExclusionConstraint: jest.fn(),
-        dropExclusionConstraint: jest.fn(),
-        createForeignKey: jest.fn(),
-        dropForeignKey: jest.fn(),
-        createIndex: jest.fn(),
-        dropIndex: jest.fn(),
-        dropIndices: jest.fn(),
-        createView: jest.fn(),
-        dropView: jest.fn(),
-        createSchema: jest.fn(),
-        dropSchema: jest.fn(),
-        hasSchema: jest.fn(),
-        createDatabase: jest.fn(),
-        dropDatabase: jest.fn(),
-        hasDatabase: jest.fn()
-    } as unknown as jest.Mocked<QueryRunner>;
+        query: vi.fn(),
+        createTable: vi.fn(),
+        dropTable: vi.fn(),
+        renameTable: vi.fn(),
+        hasTable: vi.fn(),
+        hasColumn: vi.fn(),
+        getTable: vi.fn(),
+        clearTable: vi.fn(),
+        changeTableComment: vi.fn(),
+        addColumn: vi.fn(),
+        addColumns: vi.fn(),
+        renameColumn: vi.fn(),
+        changeColumn: vi.fn(),
+        changeColumns: vi.fn(),
+        dropColumn: vi.fn(),
+        dropColumns: vi.fn(),
+        createPrimaryKey: vi.fn(),
+        updatePrimaryKeys: vi.fn(),
+        dropPrimaryKey: vi.fn(),
+        createUniqueConstraint: vi.fn(),
+        dropUniqueConstraint: vi.fn(),
+        createCheckConstraint: vi.fn(),
+        dropCheckConstraint: vi.fn(),
+        createExclusionConstraint: vi.fn(),
+        dropExclusionConstraint: vi.fn(),
+        createForeignKey: vi.fn(),
+        dropForeignKey: vi.fn(),
+        createIndex: vi.fn(),
+        dropIndex: vi.fn(),
+        dropIndices: vi.fn(),
+        createView: vi.fn(),
+        dropView: vi.fn(),
+        createSchema: vi.fn(),
+        dropSchema: vi.fn(),
+        hasSchema: vi.fn(),
+        createDatabase: vi.fn(),
+        dropDatabase: vi.fn(),
+        hasDatabase: vi.fn()
+    } as unknown as Mocked<QueryRunner>;
 };
 
 describe('BaseMigration', () => {
     let migration: TestMigration;
-    let queryRunner: jest.Mocked<QueryRunner>;
+    let queryRunner: Mocked<QueryRunner>;
 
     beforeEach(async () => {
         migration = new TestMigration();
@@ -133,13 +134,13 @@ describe('BaseMigration', () => {
 
     describe('up() and down()', () => {
         it('up() delegates to run()', async () => {
-            const runSpy = jest.spyOn(migration, 'run');
+            const runSpy = vi.spyOn(migration, 'run');
             await migration.up(queryRunner);
             expect(runSpy).toHaveBeenCalledWith(queryRunner);
         });
 
         it('down() delegates to rollback()', async () => {
-            const rollbackSpy = jest.spyOn(migration, 'rollback');
+            const rollbackSpy = vi.spyOn(migration, 'rollback');
             await migration.down(queryRunner);
             expect(rollbackSpy).toHaveBeenCalledWith(queryRunner);
         });
