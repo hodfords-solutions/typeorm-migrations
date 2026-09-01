@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { TableColumn, TableForeignKey } from 'typeorm';
-import { TableColumnOptions } from 'typeorm/schema-builder/options/TableColumnOptions';
-import { BaseColumn } from './base.column';
+import { TableColumnOptions } from 'typeorm/schema-builder/options/TableColumnOptions.js';
+import { BaseColumn } from './base.column.js';
 
 export class BaseTable {
     private columns: BaseColumn[] = [];
@@ -20,34 +20,31 @@ export class BaseTable {
         return this.columns
             .filter((column) => column.isIndex)
             .map((column) => column.tableColumn)
-            .concat(this.changeIndexColumns.map((c) => new TableColumn({ name: c, type: null })));
+            .concat(this.changeIndexColumns.map((c) => new TableColumn({ name: c, type: null as unknown as string })));
     }
 
     public getForeignKeys(): TableForeignKey[] {
-        const foreignKeys = [];
+        const foreignKeys: TableForeignKey[] = [];
         for (const column of this.columns) {
             foreignKeys.push(...column.foreignKeys);
         }
         return foreignKeys;
     }
 
-    private getColumnValue(
-        intOptions: TableColumnOptions,
-        options: Partial<TableColumnOptions> = undefined
-    ): BaseColumn {
+    private getColumnValue(intOptions: TableColumnOptions, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return new BaseColumn(new TableColumn({ ...intOptions, ...options }));
     }
 
     /**
      * Add a column of any type supported by the database driver.
      */
-    public column(name: string, type: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public column(name: string, type: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue({ name, type }, options);
         this.columns.push(column);
         return column;
     }
 
-    public bytea(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public bytea(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name,
@@ -59,7 +56,7 @@ export class BaseTable {
         return column;
     }
 
-    public string(name: string, length: number = 255, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public string(name: string, length: number = 255, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -72,7 +69,7 @@ export class BaseTable {
         return column;
     }
 
-    public tsvector(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public tsvector(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -84,7 +81,7 @@ export class BaseTable {
         return column;
     }
 
-    public text(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public text(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -96,7 +93,7 @@ export class BaseTable {
         return column;
     }
 
-    public strings(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public strings(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -110,7 +107,7 @@ export class BaseTable {
         return column;
     }
 
-    public uuid(name: string = 'id', options: Partial<TableColumnOptions> = null): BaseColumn {
+    public uuid(name: string = 'id', options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -122,7 +119,7 @@ export class BaseTable {
         return column;
     }
 
-    public uuids(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public uuids(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -135,7 +132,7 @@ export class BaseTable {
         return column;
     }
 
-    public primaryUuid(name: string = 'id', options: Partial<TableColumnOptions> = null): BaseColumn {
+    public primaryUuid(name: string = 'id', options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -152,7 +149,7 @@ export class BaseTable {
     /**
      * Only for Postgres 18+
      */
-    public primaryUuidV7(name: string = 'id', options: Partial<TableColumnOptions> = null): BaseColumn {
+    public primaryUuidV7(name: string = 'id', options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -166,7 +163,7 @@ export class BaseTable {
         return column;
     }
 
-    public integer(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public integer(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -178,7 +175,7 @@ export class BaseTable {
         return column;
     }
 
-    public smallint(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public smallint(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -190,7 +187,7 @@ export class BaseTable {
         return column;
     }
 
-    public bigint(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public bigint(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -202,7 +199,7 @@ export class BaseTable {
         return column;
     }
 
-    public integers(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public integers(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -214,7 +211,7 @@ export class BaseTable {
         return column;
     }
 
-    public double(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public double(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -226,7 +223,7 @@ export class BaseTable {
         return column;
     }
 
-    public timestamp(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public timestamp(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -238,7 +235,7 @@ export class BaseTable {
         return column;
     }
 
-    public date(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public date(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -254,7 +251,7 @@ export class BaseTable {
         name: string,
         precision: number = 10,
         scale: number = 2,
-        options: Partial<TableColumnOptions> = null
+        options: Partial<TableColumnOptions> = {}
     ): BaseColumn {
         const column = this.getColumnValue(
             {
@@ -269,7 +266,7 @@ export class BaseTable {
         return column;
     }
 
-    public boolean(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public boolean(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -281,7 +278,7 @@ export class BaseTable {
         return column;
     }
 
-    public jsonb(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public jsonb(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -293,7 +290,7 @@ export class BaseTable {
         return column;
     }
 
-    public json(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public json(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -348,7 +345,7 @@ export class BaseTable {
         name: string,
         enumName: string,
         enumValues: Record<string, string> | string[],
-        options: Partial<TableColumnOptions> = null
+        options: Partial<TableColumnOptions> = {}
     ): BaseColumn {
         const values = Array.isArray(enumValues) ? enumValues : Object.values(enumValues);
         const column = this.getColumnValue(
@@ -379,7 +376,7 @@ export class BaseTable {
         return column;
     }
 
-    public char(name: string, length: number, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public char(name: string, length: number, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -392,7 +389,7 @@ export class BaseTable {
         return column;
     }
 
-    public increments(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public increments(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -407,7 +404,7 @@ export class BaseTable {
         return column;
     }
 
-    public smallIncrements(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public smallIncrements(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -422,7 +419,7 @@ export class BaseTable {
         return column;
     }
 
-    public bigIncrements(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public bigIncrements(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -437,7 +434,7 @@ export class BaseTable {
         return column;
     }
 
-    public real(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public real(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -449,7 +446,7 @@ export class BaseTable {
         return column;
     }
 
-    public doublePrecision(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public doublePrecision(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -461,19 +458,19 @@ export class BaseTable {
         return column;
     }
 
-    public float(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public float(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.doublePrecision(name, options);
     }
 
-    public float4(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public float4(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.real(name, options);
     }
 
-    public float8(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public float8(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.doublePrecision(name, options);
     }
 
-    public time(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public time(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -485,7 +482,7 @@ export class BaseTable {
         return column;
     }
 
-    public timetz(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public timetz(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -497,7 +494,7 @@ export class BaseTable {
         return column;
     }
 
-    public timestamptz(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public timestamptz(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         const column = this.getColumnValue(
             {
                 name: name,
@@ -571,7 +568,7 @@ export class BaseTable {
         return column;
     }
 
-    public varchar(name: string, length: number = 255, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public varchar(name: string, length: number = 255, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.string(name, length, options);
     }
 
@@ -579,128 +576,128 @@ export class BaseTable {
         name: string,
         precision: number = 10,
         scale: number = 2,
-        options: Partial<TableColumnOptions> = null
+        options: Partial<TableColumnOptions> = {}
     ): BaseColumn {
         return this.column(name, 'numeric', { precision, scale, ...options });
     }
 
-    public money(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public money(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'money', options);
     }
 
-    public citext(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public citext(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'citext', options);
     }
 
-    public hstore(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public hstore(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'hstore', options);
     }
 
-    public bit(name: string, length: number = 1, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public bit(name: string, length: number = 1, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'bit', { length: length.toString(), ...options });
     }
 
-    public varbit(name: string, length?: number, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public varbit(name: string, length?: number, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'bit varying', { length: length?.toString(), ...options });
     }
 
-    public interval(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public interval(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'interval', options);
     }
 
-    public point(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public point(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'point', options);
     }
 
-    public line(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public line(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'line', options);
     }
 
-    public lseg(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public lseg(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'lseg', options);
     }
 
-    public box(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public box(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'box', options);
     }
 
-    public path(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public path(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'path', options);
     }
 
-    public polygon(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public polygon(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'polygon', options);
     }
 
-    public circle(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public circle(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'circle', options);
     }
 
-    public cidr(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public cidr(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'cidr', options);
     }
 
-    public macaddr8(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public macaddr8(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'macaddr8', options);
     }
 
-    public tsquery(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public tsquery(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'tsquery', options);
     }
 
-    public xml(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public xml(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'xml', options);
     }
 
-    public int4range(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public int4range(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'int4range', options);
     }
 
-    public int8range(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public int8range(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'int8range', options);
     }
 
-    public numrange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public numrange(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'numrange', options);
     }
 
-    public tsrange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public tsrange(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'tsrange', options);
     }
 
-    public tstzrange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public tstzrange(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'tstzrange', options);
     }
 
-    public daterange(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public daterange(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'daterange', options);
     }
 
-    public cube(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public cube(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'cube', options);
     }
 
-    public ltree(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public ltree(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'ltree', options);
     }
 
-    public smallints(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public smallints(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'smallint', { isArray: true, ...options });
     }
 
-    public bigints(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public bigints(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'bigint', { isArray: true, ...options });
     }
 
-    public booleans(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public booleans(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'boolean', { isArray: true, ...options });
     }
 
-    public jsonbs(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public jsonbs(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'jsonb', { isArray: true, ...options });
     }
 
-    public texts(name: string, options: Partial<TableColumnOptions> = null): BaseColumn {
+    public texts(name: string, options: Partial<TableColumnOptions> = {}): BaseColumn {
         return this.column(name, 'text', { isArray: true, ...options });
     }
 }

@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseColumn } from '@hodfords/typeorm-migrations';
 import { TableColumn, TableForeignKey } from 'typeorm';
 

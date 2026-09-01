@@ -3,4 +3,6 @@ node_modules
 src/**/*.js
 src/**/*.js.map
 .idea
+# TypeScript incremental build info (TS6 writes it next to tsconfig)
+*.tsbuildinfo
 test-lib.sh

@@ -1,3 +1,3 @@
-export * from './migrations/base.column';
-export * from './migrations/base.migration';
-export * from './migrations/base.table';
+export * from './migrations/base.column.js';
+export * from './migrations/base.migration.js';
+export * from './migrations/base.table.js';
